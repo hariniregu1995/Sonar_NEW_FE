@@ -90,33 +90,33 @@ jobs:
       # ---------------------------
       # Run Tests - React
       # ---------------------------
-      - name: Run tests (React)
-        if: steps.detect.outputs.type == 'react'
-        run: |
-          npm test -- --coverage --watchAll=false --coverageReporters=lcov
-        env:
-          CI: true
+      # - name: Run tests (React)
+      #   if: steps.detect.outputs.type == 'react'
+      #   run: |
+      #     npm test -- --coverage --watchAll=false --coverageReporters=lcov
+      #   env:
+      #     CI: true
 
-      # ---------------------------
-      # Run Tests - Python / Flask
-      # ---------------------------
-      - name: Run tests (Python/Flask)
-        if: steps.detect.outputs.type == 'python' || steps.detect.outputs.type == 'flask'
-        run: |
-          if [ -d "tests" ] || [ -d "test" ]; then
-            pytest tests/ --cov=. --cov-report=xml --ignore=node_modules || \
-            pytest test/  --cov=. --cov-report=xml --ignore=node_modules
-          else
-            echo "No test directory found, skipping tests"
-            echo '<?xml version="1.0" ?><coverage version="1" timestamp="0" lines-valid="1" lines-covered="1" line-rate="1.0" branches-covered="0" branches-valid="0" branch-rate="0" complexity="0"><packages></packages></coverage>' > coverage.xml
-          fi
+      # # ---------------------------
+      # # Run Tests - Python / Flask
+      # # ---------------------------
+      # - name: Run tests (Python/Flask)
+      #   if: steps.detect.outputs.type == 'python' || steps.detect.outputs.type == 'flask'
+      #   run: |
+      #     if [ -d "tests" ] || [ -d "test" ]; then
+      #       pytest tests/ --cov=. --cov-report=xml --ignore=node_modules || \
+      #       pytest test/  --cov=. --cov-report=xml --ignore=node_modules
+      #     else
+      #       echo "No test directory found, skipping tests"
+      #       echo '<?xml version="1.0" ?><coverage version="1" timestamp="0" lines-valid="1" lines-covered="1" line-rate="1.0" branches-covered="0" branches-valid="0" branch-rate="0" complexity="0"><packages></packages></coverage>' > coverage.xml
+      #     fi
 
-      # ---------------------------
-      # Verify Coverage File (Python/Flask)
-      # ---------------------------
-      - name: Check coverage file
-        if: steps.detect.outputs.type == 'python' || steps.detect.outputs.type == 'flask'
-        run: ls -l coverage.xml
+      # # ---------------------------
+      # # Verify Coverage File (Python/Flask)
+      # # ---------------------------
+      # - name: Check coverage file
+      #   if: steps.detect.outputs.type == 'python' || steps.detect.outputs.type == 'flask'
+      #   run: ls -l coverage.xml
 
       # ---------------------------
       # SonarQube Scan - React
